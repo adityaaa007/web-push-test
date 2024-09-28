@@ -41,9 +41,9 @@ export const requestForToken = () => {
 
 onMessage(messaging, ({ notification }) => {
   new Notification(notification.title, {
-    body: notification.body,
-    icon: notification.icon,
+    body: "foreground "+notification.body,
+    // icon: notification.icon,
   });
 
-  console.log(" Notification: ", JSON.stringify(notification));
+  console.log("Foreground Notification: ", JSON.stringify(notification));
 });
