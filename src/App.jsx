@@ -6,22 +6,38 @@ function App() {
 
   const subscribeToTopic = async (token, topic) => {
     try {
-      const response = await fetch('https://api.ouranosrobotics.com/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token, topic }),
-      });
+      const response = await fetch(
+        "https://api.ouranosrobotics.com/subscribe",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token, topic }),
+        }
+      );
       const data = await response.json();
-      console.log('data: ',data);
+      console.log("data: ", data);
     } catch (error) {
-      console.error('Error subscribing to topic:', error);
+      console.error("Error subscribing to topic:", error);
     }
   };
-  
 
   useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/firebase-messaging-sw.js")
+        .then(function (registration) {
+          console.log(
+            "Service Worker registration successful with scope: ",
+            registration.scope
+          );
+        })
+        .catch(function (err) {
+          console.error("Service Worker registration failed:", err);
+        });
+    }
+
     const getToken = async () => {
       const permission = await Notification.requestPermission();
       if (permission === "granted") {
@@ -29,7 +45,7 @@ function App() {
         if (token) {
           setToken(token);
 
-          await subscribeToTopic(token, "test")
+          await subscribeToTopic(token, "test");
         }
       }
     };
