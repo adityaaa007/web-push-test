@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { requestForToken } from "./config/firebase";
+import { requestForToken, onMessageHandler } from "./config/firebase";
 
 function App() {
   const [token, setToken] = useState("");
@@ -37,6 +37,8 @@ function App() {
           console.error("Service Worker registration failed:", err);
         });
     }
+
+    onMessageHandler();
 
     const getToken = async () => {
       const permission = await Notification.requestPermission();

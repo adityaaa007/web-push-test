@@ -39,9 +39,9 @@ export const requestForToken = () => {
     });
 };
 
-onMessage(messaging, ({ notification }) => {
+export const onMessageHandler = onMessage(messaging, ({ notification }) => {
   new Notification(notification.title, {
-    body: "foreground "+notification.body,
+    body: "foreground " + notification.body,
     // icon: notification.icon,
   });
 
